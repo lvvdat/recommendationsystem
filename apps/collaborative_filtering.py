@@ -51,7 +51,6 @@ def app():
     customer_id = st.number_input('Enter customer id:', min_value=1, max_value=650636, value=1, step=1)
     similar = st.slider('Select maximum number of products similar to the above that you want system to recommend (from 1 to 5)', 1, 5, 3)
     st.write(f'Maximum number of products to recommend: {similar}')
-    st.dataframe(recommend)
 
     if st.button('Recomment'):
         df_filter = data[data.product_id.isin(recommend[recommend.user_id==customer_id]['recommendations'].values[0][:similar])]
