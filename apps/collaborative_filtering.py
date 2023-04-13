@@ -1,23 +1,29 @@
 ﻿import numpy as np
 import pandas as pd
 
-import pickle
 import requests
 import streamlit as st
 
 from PIL import Image
+
+def recommendations_array(x):
+    import numpy as np
+    x = x.replace("[","").replace("]","").replace("Row(product_id=","").replace("rating=","").replace(")","")
+    x = x.split(',')
+    id=[]
+    for i in range(np.size(x)):
+        if i%2==0:
+            id.append(int(x[i]))
+    return id
 
 @st.cache_data
 def load_data():
     data = pd.read_csv('data/Products_ThoiTrangNam_raw.csv')
     data.dropna(inplace=True)
     data.reset_index(drop=True, inplace=True)
-    return data
 
-@st.cache_resource
-def load_model():
-    model = pickle.load(open('models/svd.mdl', 'rb'))
-    return model
+    recommend = pd.read_csv('data/Products_ThoiTrangNam_rating_recommendForAllItems_ALS.csv', index_col=0, converters={"recommendations":recommendations_array})
+    return data, recommend
 
 def display_similar_products(df_filter):
     similar = len(df_filter)
@@ -41,17 +47,13 @@ def display_similar_products(df_filter):
 def app():
     st.subheader("Collaborative Filtering")
 
-    data = load_data()
-    model = load_model()
+    data, recommend = load_data()
     customer_id = st.number_input('Enter customer id:', min_value=1, max_value=650636, value=1, step=1)
-    recommend = pd.DataFrame({'product_id':data.product_id.unique()})
-
     similar = st.slider('Select maximum number of products similar to the above that you want system to recommend (from 1 to 5)', 1, 5, 3)
     st.write(f'Maximum number of products to recommend: {similar}')
+    st.dataframe(recommend)
 
     if st.button('Recomment'):
-        filter_str = f'user_id={customer_id}'
-        recommend[filter_str] = recommend['product_id'].map(lambda x: model.predict(customer_id, x).est)
-        df_filter = data[data.product_id.isin(recommend.sort_values(filter_str,ascending=False).head(similar)['product_id'].values)]
+        df_filter = data[data.product_id.isin(recommend[recommend.user_id==customer_id]['recommendations'].values[0][:similar])]
         st.write(f'There are {len(df_filter)} products found')
         display_similar_products(df_filter)
