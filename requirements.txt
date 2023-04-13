@@ -4,4 +4,4 @@ seaborn
 streamlit
 underthesea
 gensim
-PIL
+Pillow
