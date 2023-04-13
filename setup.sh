@@ -1,4 +1,3 @@
-/home/appuser/venv/bin/python -m pip install --upgrade pip
 mkdir -p ~/.streamlit/
 echo "\
 [general]\n\
