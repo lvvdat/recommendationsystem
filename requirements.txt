@@ -1,9 +1,7 @@
 numpy
 pandas
 seaborn
-
 streamlit
 underthesea
-pickle
 gensim
 PIL
