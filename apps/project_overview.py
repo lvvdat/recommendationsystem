@@ -2,7 +2,7 @@ import streamlit as st
 
 
 def app():
-    st.subheader('Product Overview')
+    st.subheader('Project Overview')
     st.image('images/about_banner.jpg')
     st.write('#### Business Understanding')
     st.write('Shopee is a top 1 e-commerce website in Vietnam and Southeast Asia and an "all in one" commerce ecosystem.')
