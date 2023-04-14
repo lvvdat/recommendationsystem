@@ -26,5 +26,3 @@ def app():
     st.write("Content-based filtering is based on a description of the item and a profile of the user's preferences.")
     st.write('These descriptions are created by the item creator and the user.')
     st.write('The recommender system will try to recommend items that are similar to those that the user liked in the past (or is examining in the present).')
-
-
