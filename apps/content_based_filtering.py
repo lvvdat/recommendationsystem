@@ -45,9 +45,9 @@ def load_data():
 def load_model():
     with open('files/vietnamese-stopwords.txt', 'r', encoding="utf8") as file:
         stopwords = file.read().split('\n')
-    tfidf = pickle.load(open("models/tfidf.p", "rb"))
-    dictionary = Dictionary.load('models/dictionary')
-    indexes = similarities.SparseMatrixSimilarity.load('models/SparseMatrixSimilarity.index')
+    tfidf = pickle.load(open("models/tfidf.mdl", "rb"))
+    dictionary = Dictionary.load('models/dictionary.mdl')
+    indexes = similarities.SparseMatrixSimilarity.load('models/SparseMatrixSimilarity.mdl')
     return tfidf, dictionary, indexes, stopwords
 
 def display_similar_products(df_filter):
