@@ -84,7 +84,7 @@ def app():
     else:
         st.success(str(data2[data2.user_id==customer_id]['user'].head(1).values[0])+' has successfully logged in') 
     with st.expander("Setting"):
-        similar = st.slider('Select the maximum number of products similar to the above that you want the system to recommend (from 1 to 25)', 1, 25, 25)
+        similar = st.slider('Select the maximum number of products similar to the above that you want the system to recommend (from 1 to 25)', 1, 25, 12)
         rating = st.slider('Select the minimum number of ratings similar to the above that you want the system to recommend (from 1 to 10)', 0, 10, 0)
     
     if st.button('Recomment') and (customer_id in user_id):
